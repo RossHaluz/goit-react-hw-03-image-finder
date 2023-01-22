@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ImageGalleryList } from './ImageGallery.styled';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import FetchPhotosGallery from 'components/api/api';
+import ImageLoader from 'components/Loader/Loader';
+import LoadMore from 'components/LoadMoreBtn';
 
 class ImageGallery extends Component {
   state = {
@@ -14,8 +16,11 @@ class ImageGallery extends Component {
   async componentDidUpdate(prevProp, prevState) {
     const prevNameSearch = prevProp.nameSerach;
     const nextNameSearch = this.props.nameSerach;
-    if (prevNameSearch !== nextNameSearch) {
-      this.setState({ loading: true, page: 1, items: [] });
+    if (
+      prevNameSearch !== nextNameSearch ||
+      prevState.page !== this.state.page
+    ) {
+      this.setState({ loading: true });
       try {
         const images = await FetchPhotosGallery(
           nextNameSearch,
@@ -30,12 +35,17 @@ class ImageGallery extends Component {
     }
   }
 
+  onChangePageNumber = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
+
   render() {
     const { items, loading } = this.state;
     return (
       <ImageGalleryList>
-        {loading && <p>Loading...</p>}
+        {loading && <ImageLoader />}
         <ImageGalleryItem items={items} />
+        {items.length > 11 && <LoadMore addPage={this.onChangePageNumber} />}
       </ImageGalleryList>
     );
   }
