@@ -20,7 +20,11 @@ class ImageGallery extends Component {
       prevNameSearch !== nextNameSearch ||
       prevState.page !== this.state.page
     ) {
-      this.setState({ loading: true, error: null, items: [] });
+      this.setState({
+        loading: true,
+        error: null,
+        items: [],
+      });
       try {
         const images = await FetchPhotosGallery(
           nextNameSearch,
@@ -39,6 +43,7 @@ class ImageGallery extends Component {
   }
 
   onChangePageNumber = () => {
+    this.setState({ page: 1 });
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
