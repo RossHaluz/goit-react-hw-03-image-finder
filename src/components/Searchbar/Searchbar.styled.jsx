@@ -38,6 +38,7 @@ export const SearchFormBtn = styled.button`
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #f5f5f5;
   opacity: 0.6;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
