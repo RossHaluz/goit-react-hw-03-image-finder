@@ -17,7 +17,7 @@ class ImageGalleryItem extends Component {
     const { isOpen, largeImage } = this.state;
     return (
       <>
-        {items.map(({ id, webformatURL, largeImageURL }) => {
+        {items.map(({ webformatURL, largeImageURL, id }) => {
           return (
             <li key={id} onClick={() => this.onShowLargeImg(largeImageURL)}>
               <img src={webformatURL} alt="" width={350} height={350} />

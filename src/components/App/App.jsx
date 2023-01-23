@@ -17,15 +17,21 @@ class App extends Component {
   };
 
   async componentDidUpdate(prevProp, prevState) {
-    if (
-      prevState.name !== this.state.name ||
-      prevState.page !== this.state.page
-    ) {
-      this.setState({});
-      console.log('Змінили імя');
-      const images = await FetchPhotosGallery(this.state.name, this.state.page);
-      console.log(images);
-      this.setState({ items: images.hits });
+    const { name, page } = this.state;
+    if (prevState.name !== name || prevState.page !== page) {
+      this.setState({ items: [], error: null });
+      try {
+        const images = await FetchPhotosGallery(name, page);
+        if (images.hits.length === 0) {
+          throw new Error();
+        }
+        this.setState(prev => ({ items: images.hits }));
+      } catch (error) {
+        this.setState({ error });
+      }
+    }
+    if (prevState.name !== name) {
+      this.setState({ page: 1 });
     }
   }
 
@@ -42,11 +48,12 @@ class App extends Component {
   };
 
   render() {
-    const { items } = this.state;
+    const { items, error } = this.state;
     return (
       <Container>
         <Searchbar onSubmit={this.getNameSerch} />
         <ImageGallery items={items} />
+        {error && <p>Щось пішло не так :( Оновіть сторінку.</p>}
         {items.length > 11 && <LoadMore changePage={this.onChangePage} />}
         <Toaster position="top-right" />
       </Container>
