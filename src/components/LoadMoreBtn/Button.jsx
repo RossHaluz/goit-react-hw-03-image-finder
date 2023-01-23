@@ -1,12 +1,12 @@
-import { LoadMoreBtn } from './Button.styled';
+import { LoadMoreBtn, LoadMoreBtnContainer } from './Button.styled';
 
 const LoadMore = ({ addPage }) => {
   return (
-    <div>
+    <LoadMoreBtnContainer>
       <LoadMoreBtn type="button" onClick={addPage}>
         Load more
       </LoadMoreBtn>
-    </div>
+    </LoadMoreBtnContainer>
   );
 };
 

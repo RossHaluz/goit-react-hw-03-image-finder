@@ -26,7 +26,10 @@ class ImageGallery extends Component {
           nextNameSearch,
           this.state.page
         );
-        this.setState({ items: images.hits });
+        if (images.hits.length === 0) {
+          throw new Error();
+        }
+        this.setState({ items: [...images.hits] });
       } catch (error) {
         this.setState({ error });
       } finally {
@@ -40,13 +43,16 @@ class ImageGallery extends Component {
   };
 
   render() {
-    const { items, loading } = this.state;
+    const { items, loading, error } = this.state;
     return (
-      <ImageGalleryList>
-        {loading && <ImageLoader />}
-        <ImageGalleryItem items={items} />
+      <>
+        <ImageGalleryList>
+          {error && <p>Упс.. щось пішло не так :( Оновіть сторінку.</p>}
+          {loading && <ImageLoader />}
+          <ImageGalleryItem items={items} />
+        </ImageGalleryList>
         {items.length > 11 && <LoadMore addPage={this.onChangePageNumber} />}
-      </ImageGalleryList>
+      </>
     );
   }
 }
