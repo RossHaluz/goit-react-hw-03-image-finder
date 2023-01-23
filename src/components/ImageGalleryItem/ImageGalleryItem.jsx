@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { GalleryItem, ImageGalleryItemImg } from './ImageGalleryItem.styled';
 import LargePhotoModal from 'components/Modal';
 
 class ImageGalleryItem extends Component {
@@ -19,9 +20,17 @@ class ImageGalleryItem extends Component {
       <>
         {items.map(({ webformatURL, largeImageURL, id }) => {
           return (
-            <li key={id} onClick={() => this.onShowLargeImg(largeImageURL)}>
-              <img src={webformatURL} alt="" width={350} height={350} />
-            </li>
+            <GalleryItem
+              key={id}
+              onClick={() => this.onShowLargeImg(largeImageURL)}
+            >
+              <ImageGalleryItemImg
+                src={webformatURL}
+                alt=""
+                width={350}
+                height={350}
+              />
+            </GalleryItem>
           );
         })}
         {isOpen && (
