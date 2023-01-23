@@ -1,9 +1,9 @@
 import { LoadMoreBtn, LoadMoreBtnContainer } from './Button.styled';
 
-const LoadMore = ({ addPage }) => {
+const LoadMore = ({ changePage }) => {
   return (
     <LoadMoreBtnContainer>
-      <LoadMoreBtn type="button" onClick={addPage}>
+      <LoadMoreBtn type="button" onClick={changePage}>
         Load more
       </LoadMoreBtn>
     </LoadMoreBtnContainer>
