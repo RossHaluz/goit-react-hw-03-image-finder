@@ -25,7 +25,7 @@ class App extends Component {
         if (images.hits.length === 0) {
           throw new Error();
         }
-        this.setState(prev => ({ items: images.hits }));
+        this.setState(prev => ({ items: [...prev.items, ...images.hits] }));
       } catch (error) {
         this.setState({ error });
       }
