@@ -20,7 +20,7 @@ class LargePhotoModal extends Component {
   };
 
   handleBackdropClick = e => {
-    if (e.target == e.currentTarget) {
+    if (e.target === e.currentTarget) {
       this.props.onClose();
     }
   };
