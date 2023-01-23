@@ -26,7 +26,7 @@ class ImageGalleryItem extends Component {
         })}
         {isOpen && (
           <LargePhotoModal
-            largeImg={largeImage ? largeImage : ''}
+            largeImg={largeImage}
             onClose={this.onShowLargeImg}
           />
         )}
