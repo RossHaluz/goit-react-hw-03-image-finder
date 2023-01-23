@@ -16,7 +16,6 @@ class App extends Component {
       toast.error('Ведіть текст у пошук!');
       return;
     }
-    console.log(name);
     this.setState({ name });
   };
 

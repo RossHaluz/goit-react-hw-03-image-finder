@@ -2,9 +2,11 @@ import { LoadMoreBtn } from './Button.styled';
 
 const LoadMore = ({ addPage }) => {
   return (
-    <LoadMoreBtn type="button" onClick={addPage}>
-      Load more
-    </LoadMoreBtn>
+    <div>
+      <LoadMoreBtn type="button" onClick={addPage}>
+        Load more
+      </LoadMoreBtn>
+    </div>
   );
 };
 
