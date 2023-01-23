@@ -19,7 +19,6 @@ class App extends Component {
   async componentDidUpdate(prevProp, prevState) {
     const { name, page } = this.state;
     if (prevState.name !== name || prevState.page !== page) {
-      this.setState({ items: [], error: null });
       try {
         const images = await FetchPhotosGallery(name, page);
         if (images.hits.length === 0) {
@@ -29,9 +28,6 @@ class App extends Component {
       } catch (error) {
         this.setState({ error });
       }
-    }
-    if (prevState.name !== name) {
-      this.setState({ page: 1 });
     }
   }
 
@@ -44,7 +40,7 @@ class App extends Component {
       toast.error('Ведіть текст у пошук!');
       return;
     }
-    this.setState({ name });
+    this.setState({ name, items: [], error: null, page: 1 });
   };
 
   render() {
