@@ -30,7 +30,6 @@ class ImageGalleryItem extends Component {
             onClose={this.onShowLargeImg}
           />
         )}
-        ;
       </>
     );
   }
