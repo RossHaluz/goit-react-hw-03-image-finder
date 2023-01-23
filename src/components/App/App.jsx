@@ -5,7 +5,8 @@ import { Container } from './App.styled';
 import ImageGallery from 'components/ImageGallery';
 import FetchPhotosGallery from 'components/api/api';
 import LoadMore from 'components/LoadMoreBtn';
-// import ImageLoader from 'components/Loader/Loader';
+// import { ImageLoader } from 'components/Loader/Loader';
+import { ThreeDots } from 'react-loader-spinner';
 
 class App extends Component {
   state = {
@@ -19,6 +20,7 @@ class App extends Component {
   async componentDidUpdate(prevProp, prevState) {
     const { name, page } = this.state;
     if (prevState.name !== name || prevState.page !== page) {
+      this.setState({ loading: true });
       try {
         const images = await FetchPhotosGallery(name, page);
         if (images.hits.length === 0) {
@@ -27,6 +29,8 @@ class App extends Component {
         this.setState(prev => ({ items: [...prev.items, ...images.hits] }));
       } catch (error) {
         this.setState({ error });
+      } finally {
+        this.setState({ loading: false });
       }
     }
   }
@@ -44,11 +48,23 @@ class App extends Component {
   };
 
   render() {
-    const { items, error } = this.state;
+    const { items, error, loading } = this.state;
     return (
       <Container>
         <Searchbar onSubmit={this.getNameSerch} />
         <ImageGallery items={items} />
+        {loading && (
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#3f51b5"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{ display: 'block', margin: '0 auto' }}
+            wrapperClassName=""
+            visible={true}
+          />
+        )}
         {error && <p>Щось пішло не так :( Оновіть сторінку.</p>}
         {items.length > 11 && <LoadMore changePage={this.onChangePage} />}
         <Toaster position="top-right" />
