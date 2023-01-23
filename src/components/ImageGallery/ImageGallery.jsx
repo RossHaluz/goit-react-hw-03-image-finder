@@ -20,7 +20,7 @@ class ImageGallery extends Component {
       prevNameSearch !== nextNameSearch ||
       prevState.page !== this.state.page
     ) {
-      this.setState({ loading: true });
+      this.setState({ loading: true, error: null });
       try {
         const images = await FetchPhotosGallery(
           nextNameSearch,
