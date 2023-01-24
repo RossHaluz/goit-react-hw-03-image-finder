@@ -15,6 +15,7 @@ class App extends Component {
     page: 1,
     error: null,
     loading: false,
+    totalHits: 0,
   };
 
   async componentDidUpdate(prevProp, prevState) {
@@ -23,7 +24,9 @@ class App extends Component {
       this.setState({ loading: true });
       try {
         const images = await FetchPhotosGallery(name, page);
-        if (images.hits.length === 0) {
+        console.log(images);
+        this.setState({ totalHits: images.totalHits });
+        if (images.totalHits === 0) {
           throw new Error();
         }
         this.setState(prev => ({ items: [...prev.items, ...images.hits] }));
@@ -48,7 +51,8 @@ class App extends Component {
   };
 
   render() {
-    const { items, error, loading } = this.state;
+    const { items, error, loading, totalHits } = this.state;
+    const isShowBtn = items.length < totalHits;
     return (
       <Container>
         <Searchbar onSubmit={this.getNameSerch} />
@@ -66,7 +70,7 @@ class App extends Component {
           />
         )}
         {error && <p>Щось пішло не так :( Оновіть сторінку.</p>}
-        {items.length > 11 && <LoadMore changePage={this.onChangePage} />}
+        {isShowBtn && <LoadMore changePage={this.onChangePage} />}
         <Toaster position="top-right" />
       </Container>
     );
